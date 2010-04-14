@@ -14,12 +14,10 @@ func locate(i int) (bucket int, mask int) {
 
 // Bitvector implementation for dense sets.
 type Bitset struct {
-	max int
 	data []int
 }
 
 func (self *Bitset) Init(max int) {
-	self.max = max
 	self.data = make([]int, (max/bits_per_int)+1)
 }
 
