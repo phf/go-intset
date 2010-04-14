@@ -58,6 +58,9 @@ func TestSet(t *testing.T) {
 	s := new(Bitset)
 	s.Init(100)
 	checkAll(t, s, 100)
+	r := new(Sparse)
+	r.Init(100)
+	checkAll(t, r, 100)
 }
 
 func benchIt(b *testing.B, s Set) {
@@ -76,6 +79,13 @@ func benchIt(b *testing.B, s Set) {
 func BenchmarkBitset(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
+	b.StartTimer()
+	benchIt(b, s)
+}
+
+func BenchmarkSparse(b *testing.B) {
+	b.StopTimer()
+	s := new(Sparse)
 	b.StartTimer()
 	benchIt(b, s)
 }
