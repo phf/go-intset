@@ -1,0 +1,16 @@
+========================
+Bounded Sets of Integers
+========================
+
+Peter Williams is working on something similar, check out
+http://github.com/pwil3058/gosets for his take. I looked
+at his code for a while before deciding to do my own: In
+the end I simply couldn't decide which way is better, so
+instead of debating around to get him to change his code
+I decided to let another flower bloom and have others in
+the Go universe make a decision for us. :-D
+
+Note that I am coming at this from a compiler angle, the
+next set implementation I'll add is the sparse set stuff
+Gibbs and Torczon came up with. Stay tuned.
+
