@@ -59,3 +59,23 @@ func TestSet(t *testing.T) {
 	s.Init(100)
 	checkAll(t, s, 100)
 }
+
+func benchIt(b *testing.B, s Set) {
+	s.Init(b.N)
+	for i := 0; i < b.N; i++ {
+		s.Insert(i)
+	}
+	for i := 0; i < b.N; i++ {
+		s.Has(i)
+	}
+	for i := 0; i < b.N; i++ {
+		s.Remove(i)
+	}
+}
+
+func BenchmarkBitset(b *testing.B) {
+	b.StopTimer()
+	s := new(Bitset)
+	b.StartTimer()
+	benchIt(b, s)
+}
