@@ -35,3 +35,21 @@ func (self *Bitset) Has(i int) (b bool) {
 	bucket, mask := locate(i)
 	return (self.data[bucket] & mask) != 0
 }
+
+func (self *Bitset) iterate(c chan<- int) {
+	for bucket, value := range self.data {
+		for i := 0; i < bits_per_int; i++ {
+			if value & 1 == 1 {
+				c <- bucket*bits_per_int + i
+			}
+			value >>= 1
+		}
+	}
+}
+
+func (self *Bitset) Iter() <-chan int {
+	c := make(chan int)
+	go self.iterate(c)
+	return c
+}
+
