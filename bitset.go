@@ -1,11 +1,5 @@
 package intset
 
-import (
-	"unsafe"
-)
-
-var bits_per_int int = unsafe.Sizeof(bits_per_int)*8
-
 func locate(i int) (bucket int, mask int) {
 	bucket = i/bits_per_int
 	mask = 1 << uint(i%bits_per_int)
