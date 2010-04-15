@@ -18,7 +18,8 @@ func (self *Williams) Insert(i int) {
 
 func (self *Williams) Remove(i int) {
 	bucket, mask := locate(i)
-	self.data[bucket] &^= mask
+	chunk := self.data[bucket] & ^mask
+	self.data[bucket] = chunk, chunk != 0
 }
 
 func (self *Williams) Has(i int) (b bool) {
@@ -28,9 +29,10 @@ func (self *Williams) Has(i int) (b bool) {
 
 func (self *Williams) iterate(c chan<- int) {
 	for bucket, value := range self.data {
-		for i := 0; i < bits_per_int; i++ {
+		t := bucket * bits_per_int // loop invariant
+		for i := 0; i < bits_per_int && value != 0; i++ {
 			if value & 1 == 1 {
-				c <- bucket*bits_per_int + i
+				c <- t + i
 			}
 			value >>= 1
 		}

@@ -32,9 +32,10 @@ func (self *Bitset) Has(i int) (b bool) {
 
 func (self *Bitset) iterate(c chan<- int) {
 	for bucket, value := range self.data {
-		for i := 0; i < bits_per_int; i++ {
+		t := bucket * bits_per_int // loop invariant
+		for i := 0; i < bits_per_int && value != 0; i++ {
 			if value & 1 == 1 {
-				c <- bucket*bits_per_int + i
+				c <- t + i
 			}
 			value >>= 1
 		}
