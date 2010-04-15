@@ -143,44 +143,49 @@ func BenchmarkSimple(b *testing.B) {
 	benchIt(b, s)
 }
 
+const (
+	SMALL = 1000
+	LARGE = 100000000
+)
+
 func BenchmarkBitsetRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
 	b.StartTimer()
-	benchRandom(b, s, 1000)
+	benchRandom(b, s, SMALL)
 }
 
 func BenchmarkBitsetRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
 	b.StartTimer()
-	benchRandom(b, s, 100000000)
+	benchRandom(b, s, LARGE)
 }
 
 func BenchmarkWilliamsRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Williams)
 	b.StartTimer()
-	benchRandom(b, s, 1000)
+	benchRandom(b, s, SMALL)
 }
 
 func BenchmarkWilliamsRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Williams)
 	b.StartTimer()
-	benchRandom(b, s, 100000000)
+	benchRandom(b, s, LARGE)
 }
 
 func BenchmarkBriggsRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Briggs)
 	b.StartTimer()
-	benchRandom(b, s, 1000)
+	benchRandom(b, s, SMALL)
 }
 
 func BenchmarkBriggsRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Briggs)
 	b.StartTimer()
-	benchRandom(b, s, 100000000)
+	benchRandom(b, s, LARGE)
 }
