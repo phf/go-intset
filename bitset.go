@@ -45,6 +45,7 @@ func (self *Bitset) iterate(c chan<- int) {
 			value >>= 1
 		}
 	}
+	close(c)
 }
 
 func (self *Bitset) Iter() <-chan int {

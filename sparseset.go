@@ -39,6 +39,7 @@ func (self *Sparse) iterate(c chan<- int) {
 	for i := 0; i < self.next; i++ {
 		c <- self.dense[i]
 	}
+	close(c)
 }
 
 func (self *Sparse) Iter() <-chan int {

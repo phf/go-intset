@@ -24,6 +24,7 @@ func (self *Hash) iterate(c chan<- int) {
 	for k, _ := range self.data {
 		c <- k
 	}
+	close(c)
 }
 
 func (self *Hash) Iter() <-chan int {
