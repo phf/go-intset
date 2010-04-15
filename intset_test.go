@@ -5,6 +5,7 @@
 package intset
 
 import (
+	"rand"
 	"testing"
 )
 
@@ -99,6 +100,14 @@ func benchIt(b *testing.B, s Set) {
 	}
 }
 
+func benchRandom(b *testing.B, s Set, max int) {
+	s.Init(max)
+	for i := 0; i < b.N; i++ {
+		s.Insert(rand.Int() % (max+1))
+		s.Remove(rand.Int() % (max+1))
+	}
+}
+
 func BenchmarkBitset(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
@@ -134,3 +143,44 @@ func BenchmarkSimple(b *testing.B) {
 	benchIt(b, s)
 }
 
+func BenchmarkBitsetRandomDense(b *testing.B) {
+	b.StopTimer()
+	s := new(Bitset)
+	b.StartTimer()
+	benchRandom(b, s, 1000)
+}
+
+func BenchmarkBitsetRandomSparse(b *testing.B) {
+	b.StopTimer()
+	s := new(Bitset)
+	b.StartTimer()
+	benchRandom(b, s, 100000000)
+}
+
+func BenchmarkWilliamsRandomDense(b *testing.B) {
+	b.StopTimer()
+	s := new(Williams)
+	b.StartTimer()
+	benchRandom(b, s, 1000)
+}
+
+func BenchmarkWilliamsRandomSparse(b *testing.B) {
+	b.StopTimer()
+	s := new(Williams)
+	b.StartTimer()
+	benchRandom(b, s, 100000000)
+}
+
+func BenchmarkBriggsRandomDense(b *testing.B) {
+	b.StopTimer()
+	s := new(Sparse)
+	b.StartTimer()
+	benchRandom(b, s, 1000)
+}
+
+func BenchmarkBriggsRandomSparse(b *testing.B) {
+	b.StopTimer()
+	s := new(Sparse)
+	b.StartTimer()
+	benchRandom(b, s, 100000000)
+}
