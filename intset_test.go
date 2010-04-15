@@ -32,6 +32,19 @@ func checkInsert(t *testing.T, s Set, max int) {
 	}
 }
 
+func checkIter(t *testing.T, s Set, max int) {
+	var id map[int]bool = make(map[int]bool)
+	for i := 0; i < max; i++ {
+		id[i] = true
+	}
+	for x := range s.Iter() {
+		id[x] = false, false
+	}
+	if len(id) > 0 {
+		t.Errorf("not all values in set returned by Iter()")
+	}
+}
+
 func checkRemove(t *testing.T, s Set, max int) {
 	for i := 0; i < max; i++ {
 		s.Remove(i)
@@ -51,6 +64,7 @@ func checkRemove(t *testing.T, s Set, max int) {
 func checkAll(t *testing.T, s Set, max int) {
 	checkEmpty(t, s, max)
 	checkInsert(t, s, max)
+	checkIter(t, s, max)
 	checkRemove(t, s, max)
 }
 
