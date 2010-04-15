@@ -5,9 +5,9 @@ GOFILES=\
 	low.go\
 	set.go\
 	bitset.go\
-	sparseset.go\
+	briggsset.go\
 	hashset.go\
-	willset.go\
+	williamsset.go\
 	simpleset.go\
 
 include ../../../Make.pkg

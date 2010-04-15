@@ -73,7 +73,7 @@ func TestSet(t *testing.T) {
 	s := new(Bitset)
 	s.Init(100)
 	checkAll(t, s, 100)
-	r := new(Sparse)
+	r := new(Briggs)
 	r.Init(100)
 	checkAll(t, r, 100)
 	q := new(Hash)
@@ -115,9 +115,9 @@ func BenchmarkBitset(b *testing.B) {
 	benchIt(b, s)
 }
 
-func BenchmarkSparse(b *testing.B) {
+func BenchmarkBriggs(b *testing.B) {
 	b.StopTimer()
-	s := new(Sparse)
+	s := new(Briggs)
 	b.StartTimer()
 	benchIt(b, s)
 }
@@ -173,14 +173,14 @@ func BenchmarkWilliamsRandomSparse(b *testing.B) {
 
 func BenchmarkBriggsRandomDense(b *testing.B) {
 	b.StopTimer()
-	s := new(Sparse)
+	s := new(Briggs)
 	b.StartTimer()
 	benchRandom(b, s, 1000)
 }
 
 func BenchmarkBriggsRandomSparse(b *testing.B) {
 	b.StopTimer()
-	s := new(Sparse)
+	s := new(Briggs)
 	b.StartTimer()
 	benchRandom(b, s, 100000000)
 }
