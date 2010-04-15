@@ -81,6 +81,9 @@ func TestSet(t *testing.T) {
 	m := new(Williams)
 	m.Init(100)
 	checkAll(t, m, 100)
+	e := new(Simple)
+	e.Init(100)
+	checkAll(t, e, 100)
 }
 
 func benchIt(b *testing.B, s Set) {
@@ -120,6 +123,13 @@ func BenchmarkHash(b *testing.B) {
 func BenchmarkWilliams(b *testing.B) {
 	b.StopTimer()
 	s := new(Williams)
+	b.StartTimer()
+	benchIt(b, s)
+}
+
+func BenchmarkSimple(b *testing.B) {
+	b.StopTimer()
+	s := new(Simple)
 	b.StartTimer()
 	benchIt(b, s)
 }

@@ -8,5 +8,6 @@ GOFILES=\
 	sparseset.go\
 	hashset.go\
 	willset.go\
+	simpleset.go\
 
 include ../../../Make.pkg
