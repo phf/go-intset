@@ -34,3 +34,16 @@ func (self *Sparse) Remove(i int) {
 func (self *Sparse) Has(i int) (b bool) {
 	return self.next > 0 && self.dense[self.sparse[i]] == i
 }
+
+func (self *Sparse) iterate(c chan<- int) {
+	for i := 0; i < self.next; i++ {
+		c <- self.dense[i]
+	}
+}
+
+func (self *Sparse) Iter() <-chan int {
+	c := make(chan int)
+	go self.iterate(c)
+	return c
+}
+
