@@ -100,11 +100,18 @@ func benchIt(b *testing.B, s Set) {
 	}
 }
 
-func benchRandom(b *testing.B, s Set, max int) {
+func benchRandom(b *testing.B, s Set, load int, max int) {
 	s.Init(max)
 	for i := 0; i < b.N; i++ {
-		s.Insert(rand.Int() % (max+1))
-		s.Remove(rand.Int() % (max+1))
+		for j := 0; j < load; j++ {
+			s.Insert(rand.Int() % (max+1))
+			s.Remove(rand.Int() % (max+1))
+			s.Has(rand.Int() % (max+1))
+		}
+		y := 0
+		for x := range s.Iter() {
+			y += x
+		}
 	}
 }
 
@@ -145,47 +152,48 @@ func BenchmarkSimple(b *testing.B) {
 
 const (
 	SMALL = 1000
-	LARGE = 100000000
+	LOAD = SMALL
+	LARGE = 1000000
 )
 
 func BenchmarkBitsetRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
 	b.StartTimer()
-	benchRandom(b, s, SMALL)
+	benchRandom(b, s, LOAD, SMALL)
 }
 
 func BenchmarkBitsetRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Bitset)
 	b.StartTimer()
-	benchRandom(b, s, LARGE)
+	benchRandom(b, s, LOAD, LARGE)
 }
 
 func BenchmarkWilliamsRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Williams)
 	b.StartTimer()
-	benchRandom(b, s, SMALL)
+	benchRandom(b, s, LOAD, SMALL)
 }
 
 func BenchmarkWilliamsRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Williams)
 	b.StartTimer()
-	benchRandom(b, s, LARGE)
+	benchRandom(b, s, LOAD, LARGE)
 }
 
 func BenchmarkBriggsRandomDense(b *testing.B) {
 	b.StopTimer()
 	s := new(Briggs)
 	b.StartTimer()
-	benchRandom(b, s, SMALL)
+	benchRandom(b, s, LOAD, SMALL)
 }
 
 func BenchmarkBriggsRandomSparse(b *testing.B) {
 	b.StopTimer()
 	s := new(Briggs)
 	b.StartTimer()
-	benchRandom(b, s, LARGE)
+	benchRandom(b, s, LOAD, LARGE)
 }
