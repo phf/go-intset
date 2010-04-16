@@ -101,6 +101,7 @@ func benchIt(b *testing.B, s Set) {
 }
 
 func benchRandom(b *testing.B, s Set, load int, max int) {
+	rand.Seed(64738)
 	s.Init(max)
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < load; j++ {
