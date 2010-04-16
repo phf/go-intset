@@ -1,4 +1,4 @@
-include ../../../Make.$(GOARCH)
+include $(GOROOT)/src/Make.$(GOARCH)
 
 TARG=container/intset
 GOFILES=\
@@ -10,4 +10,4 @@ GOFILES=\
 	williamsset.go\
 	simpleset.go\
 
-include ../../../Make.pkg
+include $(GOROOT)/src/Make.pkg
