@@ -7,5 +7,4 @@ type Set interface {
 	Remove(i int)
 	Has(i int) bool
 	Iter() <-chan int
-//	Union(other Set) (result Set)
 }

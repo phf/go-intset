@@ -2,6 +2,37 @@
 Bounded Sets of Integers
 ========================
 
+I first hacked this four years ago and I didn't touch Go
+a whole lot in the meantime. Now am I back trying to find
+my way around the changes in Go and I figured I might as
+well start by updating some of my old code. Here are the
+current performance figures:
+
+$ go test -bench . -benchmem -cover
+PASS
+BenchmarkBitset	10000000	       166 ns/op	       0 B/op	       0 allocs/op
+BenchmarkBriggs	50000000	        62.4 ns/op	      16 B/op	       0 allocs/op
+BenchmarkHash	 5000000	       692 ns/op	      18 B/op	       0 allocs/op
+BenchmarkWilliams	 5000000	       463 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSimple	100000000	        22.2 ns/op	       1 B/op	       0 allocs/op
+BenchmarkBitsetRandomDense	    5000	    472262 ns/op	      98 B/op	       1 allocs/op
+BenchmarkBitsetRandomSparse	     100	  12407929 ns/op	    1365 B/op	       1 allocs/op
+BenchmarkWilliamsRandomDense	    2000	    780667 ns/op	      98 B/op	       1 allocs/op
+BenchmarkWilliamsRandomSparse	     100	  13585664 ns/op	   12456 B/op	       4 allocs/op
+BenchmarkBriggsRandomDense	    5000	    351033 ns/op	     101 B/op	       1 allocs/op
+BenchmarkBriggsRandomSparse	     100	  10652835 ns/op	  160167 B/op	       1 allocs/op
+coverage: 100.0% of statements
+ok  	github.com/phf/go-intset	23.709s
+
+So the simple implementation still wins but of course it
+also wastes a lot of memory for sparse sets. The Briggs
+implementation comes in second and with a little work it
+could be a lot more memory efficient.
+
+===============
+Notes from 2009
+===============
+
 This should go into $GOROOT/src/pkg/container/intset or
 some such place eventually; I test it there anyway. :-D
 

@@ -1,8 +1,9 @@
 package intset
 
-func locate(i int) (bucket int, mask int) {
-	bucket = i/bits_per_int
-	mask = 1 << uint(i%bits_per_int)
+// Locate the bucket and mask for the given bit.
+func locate(bit int) (bucket int, mask int) {
+	bucket = bit / bitsPerInt
+	mask = 1 << uint(bit % bitsPerInt)
 	return
 }
 
@@ -12,7 +13,7 @@ type Bitset struct {
 }
 
 func (self *Bitset) Init(max int) {
-	self.data = make([]int, (max/bits_per_int)+1)
+	self.data = make([]int, (max / bitsPerInt) + 1)
 }
 
 func (self *Bitset) Insert(i int) {
@@ -25,15 +26,15 @@ func (self *Bitset) Remove(i int) {
 	self.data[bucket] &^= mask
 }
 
-func (self *Bitset) Has(i int) (b bool) {
+func (self *Bitset) Has(i int) bool {
 	bucket, mask := locate(i)
 	return (self.data[bucket] & mask) != 0
 }
 
 func (self *Bitset) iterate(c chan<- int) {
 	for bucket, value := range self.data {
-		t := bucket * bits_per_int // loop invariant
-		for i := 0; i < bits_per_int && value != 0; i++ {
+		t := bucket * bitsPerInt // loop invariant
+		for i := 0; i < bitsPerInt && value != 0; i++ {
 			if value & 1 == 1 {
 				c <- t + i
 			}
@@ -48,4 +49,3 @@ func (self *Bitset) Iter() <-chan int {
 	go self.iterate(c)
 	return c
 }
-

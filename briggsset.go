@@ -31,7 +31,7 @@ func (self *Briggs) Remove(i int) {
 	}
 }
 
-func (self *Briggs) Has(i int) (b bool) {
+func (self *Briggs) Has(i int) bool {
 	return self.next > 0 && self.dense[self.sparse[i]] == i
 }
 
@@ -47,4 +47,3 @@ func (self *Briggs) Iter() <-chan int {
 	go self.iterate(c)
 	return c
 }
-

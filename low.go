@@ -8,5 +8,4 @@ import (
 // ran on machines where a byte is *not* 8 bits wide... We'd
 // be screwed... :-/
 
-var bits_per_int int = unsafe.Sizeof(bits_per_int)*8
-
+var bitsPerInt int = int(unsafe.Sizeof(bitsPerInt) * 8)

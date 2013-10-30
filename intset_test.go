@@ -5,7 +5,7 @@
 package intset
 
 import (
-	"rand"
+	"math/rand"
 	"testing"
 )
 
@@ -39,7 +39,7 @@ func checkIter(t *testing.T, s Set, max int) {
 		id[i] = true
 	}
 	for x := range s.Iter() {
-		id[x] = false, false
+		delete(id, x)
 	}
 	if len(id) > 0 {
 		t.Errorf("not all values in set returned by Iter()")

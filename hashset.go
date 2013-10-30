@@ -5,7 +5,7 @@ type Hash struct {
 }
 
 func (self *Hash) Init(max int) {
-	self.data = make(map[int]bool, max)
+	self.data = make(map[int]bool, max+1)
 }
 
 func (self *Hash) Insert(i int) {
@@ -13,10 +13,10 @@ func (self *Hash) Insert(i int) {
 }
 
 func (self *Hash) Remove(i int) {
-	self.data[i] = false, false
+	delete(self.data, i)
 }
 
-func (self *Hash) Has(i int) (b bool) {
+func (self *Hash) Has(i int) bool {
 	return self.data[i]
 }
 
@@ -32,8 +32,3 @@ func (self *Hash) Iter() <-chan int {
 	go self.iterate(c)
 	return c
 }
-
-//func (self *Hash) Union(other Set) (result Set) {
-//	res := new(Hash);
-//	return res
-//}
